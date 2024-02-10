@@ -1,2 +1,2 @@
 # helper_functions
-A collection of helper functions useful to have
+A Swiss-Army-knife-like collection of helper functions.
