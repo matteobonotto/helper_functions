@@ -11,7 +11,8 @@ class Contourf2Gif():
             field : ndarray,  
             Lx : Optional[int] = 1, 
             Ly : Optional[int] = 1, 
-            namesave : Optional[str] = None
+            namesave : Optional[str] = None,
+            cmap : str = 'inferno'
             ) -> None:
         self.simulation_time = np.linspace(0, field.shape[0])
         self.field = field 
@@ -22,18 +23,19 @@ class Contourf2Gif():
             )
         self.namesave = namesave
         self.interval = 200 # ms between 2 frames
+        self.cmap = cmap
 
     def update_plot(self, i : int):
         z = self.field[i,:,:]
         for c in self._p1:
             c.remove()  # removes only the contours, leaves the rest intact
-        self._p1 = plt.contourf(self.x, self.y, z, self.cvals).collections
+        self._p1 = plt.contourf(self.x, self.y, z, self.cvals,cmap=self.cmap).collections
         plt.title('t = %i' % (i))
         return self._p1
 
     def start_simulation(self):
         self.fig, self.axes = plt.subplots()
-        self._p1 = plt.contourf(self.x, self.y, self.field[0,:,:], self.cvals).collections
+        self._p1 = plt.contourf(self.x, self.y, self.field[0,:,:], self.cvals,cmap=self.cmap).collections
         self.ani = FuncAnimation(
             fig=self.fig,
             func=self.update_plot,
