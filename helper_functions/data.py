@@ -29,7 +29,7 @@ def write_h5(
                     chunks = [chunk_1st_dim]
                     chunks.extend(item.shape[1:])
                     chunks = tuple(chunks)
-            print(chunks)
+            # print(chunks)
 
             hf.create_dataset(
                 key,

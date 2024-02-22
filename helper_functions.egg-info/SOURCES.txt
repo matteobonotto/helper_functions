@@ -1,11 +1,8 @@
 README.md
 setup.py
-helper_functions/__init__.py
 helper_functions/data.py
-helper_functions/decorators.py
 helper_functions/general.py
 helper_functions/graphics.py
-helper_functions/ndarrays.py
 helper_functions.egg-info/PKG-INFO
 helper_functions.egg-info/SOURCES.txt
 helper_functions.egg-info/dependency_links.txt
