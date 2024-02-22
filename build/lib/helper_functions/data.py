@@ -13,6 +13,9 @@ def write_h5(
         chunk_1st_dim = None
         ):
     
+    if os.path.isfile(filename):
+         os.remove(filename)
+    
     kwargs = {
         'dtype' : dtype,
         'compression' : compression, 
@@ -22,6 +25,7 @@ def write_h5(
 
     with h5py.File(filename + '.h5', 'w') as hf:
         for key,item in data.items():
+            print(chunk_1st_dim)
             if chunk_1st_dim is not None:
                  if chunk_1st_dim == True:
                       chunks = True
@@ -29,8 +33,11 @@ def write_h5(
                     chunks = [chunk_1st_dim]
                     chunks.extend(item.shape[1:])
                     chunks = tuple(chunks)
-            print(chunks)
+            else:
+                 chunks = False
 
+            # print(chunks)
+            print('Processing key {}'.format(key))
             hf.create_dataset(
                 key,
                 data = item,
