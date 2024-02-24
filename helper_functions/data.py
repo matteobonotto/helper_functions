@@ -2,6 +2,7 @@ import os
 import sys
 import h5py
 import numpy as np
+import time
 
 
 def write_h5(
@@ -10,7 +11,8 @@ def write_h5(
         dtype : str = 'float64',
         compression : str = 'lzf',
         compression_opts : int = 1,
-        chunk_1st_dim = None
+        chunk_1st_dim = None,
+        verbose : bool = False,
         ):
     
     if os.path.isfile(filename):
@@ -23,9 +25,9 @@ def write_h5(
     if compression == 'gzip':
             kwargs.update({'compression_opts' : compression_opts})
 
+    t_start = time.time()
     with h5py.File(filename + '.h5', 'w') as hf:
         for key,item in data.items():
-            print(chunk_1st_dim)
             if chunk_1st_dim is not None:
                  if chunk_1st_dim == True:
                       chunks = True
@@ -37,7 +39,12 @@ def write_h5(
                  chunks = False
 
             # print(chunks)
-            print('Processing key {}'.format(key))
+            if verbose:
+                print('Processing key: {}, dims: {}, size: {}'.format(
+                    key, 
+                    item.shape,
+                    sys.getsizeof(item)))
+
             hf.create_dataset(
                 key,
                 data = item,
@@ -45,6 +52,8 @@ def write_h5(
                 chunks=chunks,
                 **kwargs)
     hf.close()
+    if verbose:
+        print(' -> elapsed time: {:.3f}s'.format(time.time()-t_start))
 
 
 
