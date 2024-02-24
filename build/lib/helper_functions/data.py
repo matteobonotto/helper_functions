@@ -40,8 +40,10 @@ def write_h5(
 
             # print(chunks)
             if verbose:
-                print('Processing key {}, dims: {}'.format(
-                    key, item.shape))
+                print('Processing key: {}, dims: {}, size: {}'.format(
+                    key, 
+                    item.shape,
+                    sys.getsizeof(item)))
 
             hf.create_dataset(
                 key,
@@ -51,7 +53,7 @@ def write_h5(
                 **kwargs)
     hf.close()
     if verbose:
-         print(' -> elapsed time: {:.3f}s'.format(time.time()-t_start))
+        print(' -> elapsed time: {:.3f}s'.format(time.time()-t_start))
 
 
 
