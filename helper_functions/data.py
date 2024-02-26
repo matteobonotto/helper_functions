@@ -40,10 +40,10 @@ def write_h5(
 
             # print(chunks)
             if verbose:
-                print('Processing key: {}, dims: {}, size: {}'.format(
+                print('Processing key: {}, dims: {}, size: {:.2f}MB'.format(
                     key, 
                     item.shape,
-                    sys.getsizeof(item)))
+                    sys.getsizeof(item)/1e+6))
 
             hf.create_dataset(
                 key,
@@ -51,11 +51,11 @@ def write_h5(
                 shape = item.shape,
                 chunks=chunks,
                 **kwargs)
+        if verbose:
+            print(' -> DonE! Elapsed time: {:.3f}s, final size: {:.2f}MB'.format(
+                time.time()-t_start,
+                os.path.getsize(filename + '.h5')/1e+6))
     hf.close()
-    if verbose:
-        print(' -> elapsed time: {:.3f}s'.format(time.time()-t_start))
-
-
 
 def read_h5_numpy(
         filename : str, 
