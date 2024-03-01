@@ -36,7 +36,7 @@ def write_h5(
                     chunks.extend(item.shape[1:])
                     chunks = tuple(chunks)
             else:
-                 chunks = False
+                 chunks = None
 
             # print(chunks)
             if verbose:
