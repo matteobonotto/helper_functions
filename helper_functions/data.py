@@ -29,14 +29,14 @@ def write_h5(
     with h5py.File(filename + '.h5', 'w') as hf:
         for key,item in data.items():
             if chunk_1st_dim is not None:
-                 if chunk_1st_dim == True:
-                      chunks = True
-                 else:
+                if chunk_1st_dim == True:
+                    chunks = True
+                else:
                     chunks = [chunk_1st_dim]
                     chunks.extend(item.shape[1:])
                     chunks = tuple(chunks)
             else:
-                 chunks = None
+                chunks = None
 
             # print(chunks)
             if verbose:
