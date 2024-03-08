@@ -68,3 +68,38 @@ def read_h5_numpy(
             })
     return data
                  
+def hdf5_to_dict(h5_file):
+    def read_hdf5_file(h5_file):
+        for key,val in h5_file.items():
+            if type(val) == h5py._hl.dataset.Dataset:
+                d[key] = np.array(val)
+            else:
+                d[key] = read_hdf5_file(val)
+        return d
+    
+    d = dict()
+    return read_hdf5_file(h5_file)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
