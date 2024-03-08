@@ -57,15 +57,22 @@ def write_h5(
                 os.path.getsize(filename + '.h5')/1e+6))
     hf.close()
 
+# def read_h5_numpy(
+#         filename : str, 
+#         ):
+#     data = {}
+#     with h5py.File(filename, 'r') as hf:
+#         for key,item in hf.items():
+#             data.update({
+#                     key : item[()]
+#             })
+#     return data
+
 def read_h5_numpy(
         filename : str, 
         ):
-    data = {}
     with h5py.File(filename, 'r') as hf:
-        for key,item in hf.items():
-            data.update({
-                    key : item[()]
-            })
+        data = hdf5_to_dict(hf)
     return data
                  
 def hdf5_to_dict(h5_file):
