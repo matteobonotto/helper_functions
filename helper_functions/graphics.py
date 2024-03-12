@@ -10,6 +10,83 @@ from numpy import ndarray
 from matplotlib.animation import FuncAnimation, PillowWriter, FFMpegWriter
 import matplotlib.pyplot as plt
 from typing import Optional
+import matplotlib.animation as animation
+
+import os, sys
+sys.path.append(os.getcwd())
+from helper_functions.helper_functions.general import linspace
+
+
+
+def imshow_animated(
+        trajectory,
+        moviename = None,
+        cmap = 'plasma',
+        interval = 75,
+        repeat_delay = 1000,
+        dt=1
+):
+    n_step = trajectory.shape[0]
+    t = linspace(0,n_step,dt)
+    fig, ax = plt.subplots()
+    ims = []
+    for j in range(trajectory.shape[0]):
+        title = '{}s'.format(t[j])
+        im = ax.imshow(
+            np.abs(trajectory[j,...]), 
+            animated=True, 
+            interpolation='bicubic',
+            cmap=cmap,
+            origin="lower")
+        ttl = ax.text(
+            0.5, 1.01, title, 
+            horizontalalignment='center', 
+            verticalalignment='bottom', 
+            transform=ax.transAxes)
+        ims.append([im, ttl])
+    ani = animation.ArtistAnimation(
+        fig, ims, 
+        interval=interval, 
+        blit=False,
+        repeat_delay=repeat_delay)
+    if moviename is not None:
+        ani.save(filename=moviename, writer="pillow")
+
+
+# def imshow_animated(
+#         trajectory,
+#         moviename = None,
+#         cmap = 'plasma',
+#         interval = 75,
+#         repeat_delay = 1000
+# ):
+#     fig, ax = plt.subplots()
+#     ims = []
+#     for i in range(len(trajectory)):
+#         im = ax.imshow(
+#             np.abs(trajectory[i]), 
+#             animated=True, 
+#             interpolation='bicubic',
+#             cmap=cmap,
+#             origin="lower")
+#         if i == 0:
+#             ax.imshow(np.abs(
+#                 trajectory[i]), 
+#                 interpolation='bicubic',
+#                 cmap=cmap,
+#                 origin="lower")  # show an initial one first
+#         ims.append([im])
+
+#     ani = animation.ArtistAnimation(
+#         fig, ims, 
+#         interval=interval, 
+#         blit=True,
+#         repeat_delay=repeat_delay)
+#     if moviename is not None:
+#         ani.save(filename=moviename, writer="pillow")
+
+        
+
 
 class Contourf2Gif():
     def __init__(
