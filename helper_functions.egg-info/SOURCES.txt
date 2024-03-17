@@ -1,5 +1,6 @@
 README.md
 setup.py
+helper_functions/__init__.py
 helper_functions/data.py
 helper_functions/general.py
 helper_functions/graphics.py
